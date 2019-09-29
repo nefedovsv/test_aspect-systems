@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { store } from "./store/configureStore";
 import { Provider } from "react-redux";
 import "./Antd.css";
-import App from "./App";
+import App from "./components/App";
 
 render(
   <Provider store={store}>

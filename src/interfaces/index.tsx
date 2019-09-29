@@ -1,16 +1,17 @@
 export const SEND_USER = "SEND_USER";
 
-export interface IUser {
-  user: string;
-}
-
 export interface SendUserAction {
   type: typeof SEND_USER;
-  payload: string;
+  payload: { value1: string; value2: string };
 }
 
 // Интерфейсы для контента
 
+export enum ElementType {
+  panel = "panel",
+  label = "label",
+  button = "button"
+}
 export interface IProperty {
   width?: number;
   height?: number;
@@ -19,12 +20,10 @@ export interface IProperty {
 }
 
 export interface IElement {
-  type: string;
+  type: ElementType;
   props: IProperty;
 }
-
-export interface IContent {
+export interface IStore {
   content: Array<IElement>;
+  user: { value1: string; value2: string };
 }
-
-export type IStore = IContent & IUser;

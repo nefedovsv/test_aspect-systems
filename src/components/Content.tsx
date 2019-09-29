@@ -1,22 +1,23 @@
 import * as React from "react";
-import { IContent } from "../interfaces/index";
-import { connect } from "react-redux";
-//import { Button } from "antd";
-export interface IStateModalProps {
-  content: IContent;
+import { IElement } from "../interfaces/index";
+import { PanelComponent } from "./PanelComponent";
+import { ButtonComponent } from "./ButtonComponent";
+import { LabelComponent } from "./LabelComponent";
+export interface IContentProps {
+  list: IElement[];
 }
-class Content extends React.Component<IStateModalProps> {
+export class Content extends React.Component<IContentProps> {
   render() {
-    const { content } = this.props;
-    const array: any = [];
-
-    Object.entries(content).forEach(([key, value]) => array.push(value));
-    console.log(typeof array);
-    return <div>hello</div>;
+    const { list } = this.props;
+    const component: any = list.map(item => {
+      if (item.type === "panel" && item.props.visible) {
+        return <PanelComponent data={item} />;
+      } else if (item.type === "button" && item.props.visible) {
+        return <ButtonComponent data={item} />;
+      } else if (item.type === "label" && item.props.visible) {
+        return <LabelComponent data={item} />;
+      }
+    });
+    return component.filter(Boolean);
   }
 }
-const mapStateToProps = (store: any): IStateModalProps => ({
-  content: store.content
-});
-export default connect<IStateModalProps, {}, {}>(mapStateToProps)(Content);
-//value.type === "panel" && value.props.visible && <Button type="primary">Button</Button>
