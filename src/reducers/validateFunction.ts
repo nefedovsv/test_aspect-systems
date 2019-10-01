@@ -1,3 +1,4 @@
+import { IStore } from "../interfaces/index";
 export const parserObject = function(value: string) {
   if (/panel/gm.test(value) && /true/gm.test(value)) {
     let numbers = value.match(/\d+/g);
@@ -37,4 +38,29 @@ export const parserObject = function(value: string) {
       };
     }
   }
+};
+
+export const changeState = function(
+  store: IStore,
+  way: string,
+  prop: string,
+  value: string | number | boolean
+): IStore {
+  const numberElement = Number(way.charAt(8));
+  return {
+    ...store,
+    content: [
+      ...store.content.slice(0, numberElement),
+      ...[
+        {
+          ...store.content[numberElement],
+          props: {
+            ...store.content[numberElement].props,
+            [prop]: value
+          }
+        }
+      ],
+      ...store.content.slice(numberElement + 1)
+    ]
+  };
 };

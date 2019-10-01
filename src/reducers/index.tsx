@@ -1,5 +1,10 @@
-import { IStore, SendUserAction, SEND_USER } from "../interfaces/index";
-import { parserObject } from "./validateFunction";
+import {
+  IStore,
+  SendUserAction,
+  SEND_USER,
+  IElement
+} from "../interfaces/index";
+import { parserObject, changeState } from "./validateFunction";
 import { initialState } from "./initialState";
 
 export function rootReducer(
@@ -10,37 +15,46 @@ export function rootReducer(
     case SEND_USER:
       const change_property = action.payload.value1;
       const newValue = action.payload.value2;
-
       const validate = function(
         change_property: string,
         newValue: string
-      ): void {
+      ): any {
         if (
           /^[0-9]+$/gm.test(newValue) === true &&
           /width$/gm.test(change_property)
         ) {
-          const nuberElement = Number(change_property.charAt(8));
-          state.content[nuberElement].props.width = Number(newValue);
+          const rez = changeState(
+            state,
+            change_property,
+            "width",
+            Number(newValue)
+          );
+          return rez;
         } else if (
           /^[0-9]+$/gm.test(newValue) === true &&
           /height$/gm.test(change_property)
         ) {
-          const nuberElement = Number(change_property.charAt(8));
-          state.content[nuberElement].props.height = Number(newValue);
+          const rez = changeState(
+            state,
+            change_property,
+            "height",
+            Number(newValue)
+          );
+          return rez;
         } else if (
           /^true|false$/gm.test(newValue) === true &&
           /visible$/gm.test(change_property) === true
         ) {
           if (newValue.charAt(0) === "t") {
-            const nuberElement = Number(change_property.charAt(8));
-            state.content[nuberElement].props.visible = true;
+            const rez = changeState(state, change_property, "visible", true);
+            return rez;
           } else {
-            const nuberElement = Number(change_property.charAt(8));
-            state.content[nuberElement].props.visible = false;
+            const rez = changeState(state, change_property, "visible", false);
+            return rez;
           }
         } else if (/caption$/gm.test(change_property)) {
-          const nuberElement = Number(change_property.charAt(8));
-          state.content[nuberElement].props.caption = newValue;
+          const rez = changeState(state, change_property, "caption", newValue);
+          return rez;
         }
       };
 
@@ -50,11 +64,13 @@ export function rootReducer(
           state.content[0].content.push(newElement);
         }
       } else {
-        validate(change_property, newValue);
+        var rez = validate(change_property, newValue);
+        console.log(rez.content);
       }
+
       return {
         user: action.payload,
-        content: [...state.content]
+        content: rez.content
       };
     default:
       return state;
