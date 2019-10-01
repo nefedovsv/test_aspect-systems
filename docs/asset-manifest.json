@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/test_aspect-systems/static/css/main.b418479a.chunk.css",
+    "main.js": "/test_aspect-systems/static/js/main.cc33465a.chunk.js",
+    "main.js.map": "/test_aspect-systems/static/js/main.cc33465a.chunk.js.map",
+    "runtime-main.js": "/test_aspect-systems/static/js/runtime-main.45e1d3a5.js",
+    "runtime-main.js.map": "/test_aspect-systems/static/js/runtime-main.45e1d3a5.js.map",
+    "static/css/2.cc82b09a.chunk.css": "/test_aspect-systems/static/css/2.cc82b09a.chunk.css",
+    "static/js/2.2b90f6d1.chunk.js": "/test_aspect-systems/static/js/2.2b90f6d1.chunk.js",
+    "static/js/2.2b90f6d1.chunk.js.map": "/test_aspect-systems/static/js/2.2b90f6d1.chunk.js.map",
+    "index.html": "/test_aspect-systems/index.html",
+    "precache-manifest.b69965fc303f73a7b979ca6d29a9d6e9.js": "/test_aspect-systems/precache-manifest.b69965fc303f73a7b979ca6d29a9d6e9.js",
+    "service-worker.js": "/test_aspect-systems/service-worker.js",
+    "static/css/2.cc82b09a.chunk.css.map": "/test_aspect-systems/static/css/2.cc82b09a.chunk.css.map",
+    "static/css/main.b418479a.chunk.css.map": "/test_aspect-systems/static/css/main.b418479a.chunk.css.map"
+  }
+}

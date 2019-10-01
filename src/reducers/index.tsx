@@ -1,37 +1,6 @@
-import {
-  IStore,
-  SendUserAction,
-  SEND_USER,
-  ElementType
-} from "../interfaces/index";
-export const initialState: IStore = {
-  user: { value1: "", value2: "" },
-  content: [
-    {
-      type: ElementType.panel,
-      props: {
-        width: 200,
-        height: 200,
-        visible: true
-      }
-    },
-    {
-      type: ElementType.label,
-      props: {
-        caption: "Aspect Ryazan",
-        visible: true
-      }
-    },
-    {
-      type: ElementType.button,
-      props: {
-        width: 120,
-        height: 35,
-        visible: true
-      }
-    }
-  ]
-};
+import { IStore, SendUserAction, SEND_USER } from "../interfaces/index";
+import { parserObject } from "./validateFunction";
+import { initialState } from "./initialState";
 
 export function rootReducer(
   state = initialState,
@@ -39,9 +8,9 @@ export function rootReducer(
 ): IStore {
   switch (action.type) {
     case SEND_USER:
-      console.log(action.type);
       const change_property = action.payload.value1;
       const newValue = action.payload.value2;
+
       const validate = function(
         change_property: string,
         newValue: string
@@ -74,7 +43,15 @@ export function rootReducer(
           state.content[nuberElement].props.caption = newValue;
         }
       };
-      validate(change_property, newValue);
+
+      if (/visible/gm.test(newValue)) {
+        const newElement: any = parserObject(newValue);
+        if (state.content[0].content) {
+          state.content[0].content.push(newElement);
+        }
+      } else {
+        validate(change_property, newValue);
+      }
       return {
         user: action.payload,
         content: [...state.content]

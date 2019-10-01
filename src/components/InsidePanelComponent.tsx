@@ -1,10 +1,11 @@
 import * as React from "react";
 import { IElement } from "../interfaces/index";
-import { InsideComponent } from "./InsideComponent";
-export interface IPanelComponent {
+export interface IInsidePanelComponent {
   data: IElement;
 }
-export class PanelComponent extends React.Component<IPanelComponent> {
+export class InsidePanelComponent extends React.Component<
+  IInsidePanelComponent
+> {
   render() {
     const { props } = this.props.data;
     return (
@@ -15,9 +16,7 @@ export class PanelComponent extends React.Component<IPanelComponent> {
           border: "10px outset #3d77b8",
           margin: "auto"
         }}
-      >
-        <InsideComponent content={this.props.data.content} />
-      </div>
+      ></div>
     );
   }
 }

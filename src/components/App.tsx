@@ -12,14 +12,13 @@ export interface IStateModalProps {
 export interface IStateDispatchProps {
   sendUser: (value1: string, value2: string) => void;
 }
-export type IAppProps = IStateModalProps & IStateDispatchProps;
+export type IApp = IStateModalProps & IStateDispatchProps;
 interface IState {
   [key: string]: string;
 }
-class App extends React.Component<IAppProps, IState> {
+class App extends React.Component<IApp, IState> {
   constructor(props: any) {
     super(props);
-
     this.state = {
       change_property: "",
       value: ""
@@ -43,7 +42,7 @@ class App extends React.Component<IAppProps, IState> {
           <Input
             className={styles.input}
             addonBefore={"Новое значение"}
-            placeholder="число, true/false, текст"
+            placeholder="число, true/false, текст, объект"
             value={value}
             name="value"
             onChange={this.onChange}
@@ -65,10 +64,6 @@ class App extends React.Component<IAppProps, IState> {
     e.preventDefault();
     const { sendUser } = this.props;
     sendUser(this.state.change_property, this.state.value);
-    this.setState({
-      change_property: "",
-      value: ""
-    });
   };
 }
 const mapStateToProps = (store: IStore): IStateModalProps => ({
