@@ -12,14 +12,20 @@ export enum ElementType {
 export interface IProperty {
   width?: number;
   height?: number;
-  caption?: string;
   visible: boolean;
+  caption?: string;
 }
+/*export interface IProperty1 {
+  caption: string;
+  visible: boolean;
+}*/
+
 export interface IElement {
   type: ElementType;
   props: IProperty;
   content?: IElement[];
 }
+
 export interface IStore {
   content: Array<IElement>;
   user: { value1: string; value2: string };
