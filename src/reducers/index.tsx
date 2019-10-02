@@ -4,7 +4,7 @@ import {
   SEND_USER,
   IElement
 } from "../interfaces/index";
-import { parserObject, validate } from "./validateFunction";
+import { parserObject, validate, insertNewElement } from "./validateFunction";
 import { initialState } from "./initialState";
 
 export function rootReducer(
@@ -19,7 +19,9 @@ export function rootReducer(
       if (/visible/gm.test(newValue)) {
         if (state.content[0].content) {
           const newElement: IElement | null = parserObject(newValue);
-          console.log(newElement);
+          if (newElement) {
+            console.log(insertNewElement(state, newElement));
+          }
         }
       } else {
         let rez: IStore = validate(state, change_property, newValue);

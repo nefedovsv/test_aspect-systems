@@ -111,3 +111,22 @@ export const validate = function(
     return state;
   }
 };
+
+export const insertNewElement = function(
+  store: IStore,
+  element: IElement
+): IStore {
+  return {
+    ...store,
+    content: [
+      //...store.content.slice(0),
+      ...[
+        {
+          ...store.content[0],
+          content: [...[element]]
+        }
+      ]
+      // ...store.content.slice(1)
+    ]
+  };
+};
