@@ -1,8 +1,18 @@
 import { IStore, IElement, ElementType } from "../interfaces/index";
 
+function checkElement(type: ElementType, value: string): boolean {
+  const regExp: RegExp = new RegExp(type, "gm");
+  return regExp.test(value) && /true/gm.test(value);
+}
+
 export const parserObject = function(value: string): IElement | null {
-  if (/panel/gm.test(value) && /true/gm.test(value)) {
-    const numbers: string[] | null = value.match(/\d+/g);
+  const numbers: string[] | null = value.match(/\d+/g);
+  const text = value
+    .split(":")[3]
+    .split(",")[0]
+    .slice(1, -1);
+
+  if (checkElement(ElementType.panel, value)) {
     if (numbers) {
       return {
         type: ElementType.panel,
@@ -13,11 +23,7 @@ export const parserObject = function(value: string): IElement | null {
         }
       };
     }
-  } else if (/label/gm.test(value) && /true/gm.test(value)) {
-    const text = value
-      .split(":")[3]
-      .split(",")[0]
-      .slice(1, -1);
+  } else if (checkElement(ElementType.label, value)) {
     return {
       type: ElementType.label,
       props: {
@@ -25,8 +31,7 @@ export const parserObject = function(value: string): IElement | null {
         visible: true
       }
     };
-  } else if (/button/gm.test(value) && /true/gm.test(value)) {
-    let numbers: string[] | null = value.match(/\d+/g);
+  } else if (checkElement(ElementType.button, value)) {
     if (numbers) {
       return {
         type: ElementType.button,
@@ -119,14 +124,12 @@ export const insertNewElement = function(
   return {
     ...store,
     content: [
-      //...store.content.slice(0),
-      ...[
-        {
-          ...store.content[0],
-          content: [...[element]]
-        }
-      ]
-      // ...store.content.slice(1)
+      {
+        ...store.content[0],
+
+        content: [...store.content[0].content!, element]
+      },
+      ...store.content.slice(1)
     ]
   };
 };

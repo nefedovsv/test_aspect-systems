@@ -1,4 +1,6 @@
-import { SEND_USER, SendUserAction } from "../interfaces/index";
+import { SEND_USER } from "../constants/index";
+import { SendUserAction } from "../interfaces/index";
+
 export function sendUser(value1: string, value2: string): SendUserAction {
   return {
     type: SEND_USER,

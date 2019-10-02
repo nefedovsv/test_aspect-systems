@@ -1,9 +1,5 @@
-import {
-  IStore,
-  SendUserAction,
-  SEND_USER,
-  IElement
-} from "../interfaces/index";
+import { IStore, SendUserAction, IElement } from "../interfaces/index";
+import { SEND_USER } from "../constants/index";
 import { parserObject, validate, insertNewElement } from "./validateFunction";
 import { initialState } from "./initialState";
 
@@ -20,7 +16,11 @@ export function rootReducer(
         if (state.content[0].content) {
           const newElement: IElement | null = parserObject(newValue);
           if (newElement) {
-            console.log(insertNewElement(state, newElement));
+            let rez: IStore = insertNewElement(state, newElement);
+            return {
+              user: action.payload,
+              content: rez.content
+            };
           }
         }
       } else {

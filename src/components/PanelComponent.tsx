@@ -1,9 +1,11 @@
 import * as React from "react";
 import { IElement } from "../interfaces/index";
 import { InsideComponent } from "./InsideComponent";
+
 export interface IPanelComponent {
   data: IElement;
 }
+
 export class PanelComponent extends React.Component<IPanelComponent> {
   render() {
     const { props } = this.props.data;

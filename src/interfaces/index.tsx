@@ -1,24 +1,22 @@
-export const SEND_USER = "SEND_USER";
+import { SEND_USER } from "../constants/index";
+
 export interface SendUserAction {
   type: typeof SEND_USER;
   payload: { value1: string; value2: string };
 }
-// Интерфейсы для контента
+
 export enum ElementType {
   panel = "panel",
   label = "label",
   button = "button"
 }
+
 export interface IProperty {
   width?: number;
   height?: number;
   visible: boolean;
   caption?: string;
 }
-/*export interface IProperty1 {
-  caption: string;
-  visible: boolean;
-}*/
 
 export interface IElement {
   type: ElementType;
