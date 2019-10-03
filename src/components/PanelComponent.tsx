@@ -8,18 +8,17 @@ export interface IPanelComponent {
 
 export class PanelComponent extends React.Component<IPanelComponent> {
   render() {
-    const { props } = this.props.data;
     return (
-      <div
-        style={{
-          width: `${props.width}px`,
-          height: `${props.height}px`,
-          border: "10px outset #3d77b8",
-          margin: "auto"
-        }}
-      >
+      <div style={getStyle(this.props.data)}>
         <InsideComponent content={this.props.data.content} />
       </div>
     );
   }
 }
+
+export const getStyle = (data: IElement) => ({
+  width: `${data.props.width}px`,
+  height: `${data.props.height}px`,
+  border: "10px outset #3d77b8",
+  margin: "auto"
+});

@@ -1,4 +1,5 @@
-import { IStore, IElement, ElementType } from "../interfaces/index";
+import { IStore, IElement, ElementType } from "../../interfaces/index";
+import { changeState } from "./changeState";
 
 function checkElement(type: ElementType, value: string): boolean {
   const regExp: RegExp = new RegExp(type, "gm");
@@ -46,31 +47,6 @@ export const parserObject = function(value: string): IElement | null {
   return null;
 };
 
-export const changeState = function(
-  store: IStore,
-  way: string,
-  prop: string,
-  value: string | number | boolean
-): IStore {
-  const numberElement = Number(way.charAt(8));
-  return {
-    ...store,
-    content: [
-      ...store.content.slice(0, numberElement),
-      ...[
-        {
-          ...store.content[numberElement],
-          props: {
-            ...store.content[numberElement].props,
-            [prop]: value
-          }
-        }
-      ],
-      ...store.content.slice(numberElement + 1)
-    ]
-  };
-};
-
 export const validate = function(
   state: IStore,
   change_property: string,
@@ -115,21 +91,4 @@ export const validate = function(
   } else {
     return state;
   }
-};
-
-export const insertNewElement = function(
-  store: IStore,
-  element: IElement
-): IStore {
-  return {
-    ...store,
-    content: [
-      {
-        ...store.content[0],
-
-        content: [...store.content[0].content!, element]
-      },
-      ...store.content.slice(1)
-    ]
-  };
 };

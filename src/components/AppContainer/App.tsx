@@ -26,6 +26,7 @@ export class App extends React.Component<IApp, IState> {
       value: ""
     };
   }
+
   render(): React.ReactNode {
     const { change_property } = this.state;
     const { value } = this.state;

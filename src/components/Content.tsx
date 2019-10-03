@@ -22,7 +22,7 @@ export class Content extends React.Component<IContent> {
           return <LabelComponent key={index} data={item} />;
         }
       }
-      return null;
+      return [];
     });
     return component.filter(Boolean);
   }

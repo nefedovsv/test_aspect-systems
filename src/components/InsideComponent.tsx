@@ -3,9 +3,11 @@ import { IElement, ElementType } from "../interfaces/index";
 import { InsidePanelComponent } from "./InsidePanelComponent";
 import { ButtonComponent } from "./ButtonComponent";
 import { LabelComponent } from "./LabelComponent";
+
 export interface IInsideComponent {
   content?: IElement[];
 }
+
 export class InsideComponent extends React.Component<IInsideComponent> {
   render() {
     const { content } = this.props;
@@ -20,7 +22,7 @@ export class InsideComponent extends React.Component<IInsideComponent> {
             return <LabelComponent key={index} data={item} />;
           }
         }
-        return null;
+        return [];
       });
       return component.filter(Boolean);
     }

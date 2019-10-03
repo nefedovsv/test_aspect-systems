@@ -9,18 +9,19 @@ export interface IButtonComponent {
 
 export class ButtonComponent extends React.Component<IButtonComponent> {
   render() {
-    const { props } = this.props.data;
     return (
       <Button
         className={styles.box}
         type="primary"
-        style={{
-          width: `${props.width}px`,
-          height: `${props.height}px`
-        }}
+        style={getStyle(this.props.data)}
       >
         Кнопка
       </Button>
     );
   }
 }
+
+export const getStyle = (data: IElement) => ({
+  width: `${data.props.width}px`,
+  height: `${data.props.height}px`
+});
