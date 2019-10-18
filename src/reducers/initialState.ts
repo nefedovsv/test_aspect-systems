@@ -10,7 +10,16 @@ export const initialState: IStore = {
         height: 600,
         visible: true
       },
-      content: []
+      content: [
+        {
+          type: ElementType.button,
+          props: {
+            width: 120,
+            height: 35,
+            visible: true
+          }
+        }
+      ]
     },
     {
       type: ElementType.label,

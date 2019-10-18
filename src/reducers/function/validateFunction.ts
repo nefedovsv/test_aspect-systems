@@ -1,22 +1,22 @@
-import { IStore, IElement, ElementType } from "../../interfaces/index";
+import * as I from "../../interfaces/index";
 import { changeState } from "./changeState";
 
-function checkElement(type: ElementType, value: string): boolean {
+function checkElement(type: I.ElementType, value: string): boolean {
   const regExp: RegExp = new RegExp(type, "gm");
   return regExp.test(value) && /true/gm.test(value);
 }
 
-export const parserObject = function(value: string): IElement | null {
+export const parserObject = function(value: string): I.IElement | null {
   const numbers: string[] | null = value.match(/\d+/g);
   const text = value
     .split(":")[3]
     .split(",")[0]
     .slice(1, -1);
 
-  if (checkElement(ElementType.panel, value)) {
+  if (checkElement(I.ElementType.panel, value)) {
     if (numbers) {
       return {
-        type: ElementType.panel,
+        type: I.ElementType.panel,
         props: {
           width: Number(numbers[0]),
           height: Number(numbers[1]),
@@ -24,18 +24,18 @@ export const parserObject = function(value: string): IElement | null {
         }
       };
     }
-  } else if (checkElement(ElementType.label, value)) {
+  } else if (checkElement(I.ElementType.label, value)) {
     return {
-      type: ElementType.label,
+      type: I.ElementType.label,
       props: {
         caption: text,
         visible: true
       }
     };
-  } else if (checkElement(ElementType.button, value)) {
+  } else if (checkElement(I.ElementType.button, value)) {
     if (numbers) {
       return {
-        type: ElementType.button,
+        type: I.ElementType.button,
         props: {
           width: Number(numbers[0]),
           height: Number(numbers[1]),
@@ -47,48 +47,32 @@ export const parserObject = function(value: string): IElement | null {
   return null;
 };
 
-export const validate = function(
-  state: IStore,
-  change_property: string,
-  newValue: string
-): IStore {
-  if (
-    /^[0-9]+$/gm.test(newValue) === true &&
-    /width$/gm.test(change_property)
-  ) {
-    const rez: IStore = changeState(
-      state,
-      change_property,
-      "width",
-      Number(newValue)
-    );
-    return rez;
+export const changePropertyItem = function(userData: I.IUserData): I.IStore {
+  const { value, path, state } = userData;
+
+  if (/^[0-9]+$/gm.test(value) === true && /width$/gm.test(path)) {
+    return changeState(state, path, "width", Number(value));
+  } else if (/^[0-9]+$/gm.test(value) === true && /height$/gm.test(path)) {
+    return changeState(state, path, "height", Number(value));
   } else if (
-    /^[0-9]+$/gm.test(newValue) === true &&
-    /height$/gm.test(change_property)
+    /^true|false$/gm.test(value) === true &&
+    /visible$/gm.test(path) === true
   ) {
-    const rez: IStore = changeState(
-      state,
-      change_property,
-      "height",
-      Number(newValue)
-    );
-    return rez;
-  } else if (
-    /^true|false$/gm.test(newValue) === true &&
-    /visible$/gm.test(change_property) === true
-  ) {
-    if (newValue.charAt(0) === "t") {
-      const rez = changeState(state, change_property, "visible", true);
-      return rez;
+    if (value.charAt(0) === "t") {
+      return changeState(state, path, "visible", true);
     } else {
-      const rez = changeState(state, change_property, "visible", false);
-      return rez;
+      return changeState(state, path, "visible", false);
     }
-  } else if (/caption$/gm.test(change_property)) {
-    const rez = changeState(state, change_property, "caption", newValue);
-    return rez;
+  } else if (/caption$/gm.test(path)) {
+    return changeState(state, path, "caption", value);
   } else {
     return state;
   }
 };
+
+export const parsePath = (path: string) => {
+  const repeatContent: string[] | null = path.match(/content/g);
+  return repeatContent !== null && repeatContent.length === 2;
+};
+
+export const parseValue = (value: string) => /[{|}]/gm.test(value);

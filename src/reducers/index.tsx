@@ -1,43 +1,38 @@
-import { IStore, SendUserAction, IElement } from "../interfaces/index";
+import * as I from "../interfaces/index";
 import { SEND_USER } from "../constants/index";
-import { parserObject, validate } from "./function/validateFunction";
+import * as func from "./function/validateFunction";
 import { insertNewElement } from "./function/changeState";
 import { initialState } from "./initialState";
 
 export function rootReducer(
   state = initialState,
-  action: SendUserAction
-): IStore {
+  action: I.SendUserAction
+): I.IStore {
   switch (action.type) {
     case SEND_USER:
-      const change_property = action.payload.value1;
-      const newValue = action.payload.value2;
+      let userData: I.IUserData = {
+        path: action.payload.value1,
+        value: action.payload.value2,
+        state: initialState
+      };
 
-      if (checkElement(newValue)) {
-        if (state.content[0].content) {
-          const newElement: IElement | null = parserObject(newValue);
+      if (func.parsePath(userData.path)) {
+        if (func.parseValue(userData.value)) {
+          const newElement: I.IElement | null = func.parserObject(
+            userData.value
+          );
+
           if (newElement) {
-            let newState: IStore = insertNewElement(state, newElement);
-            return {
-              user: action.payload,
-              content: newState.content
-            };
+            return insertNewElement(state, newElement);
           }
+        } else {
+          return func.changePropertyItem(userData);
         }
       } else {
-        let newState: IStore = validate(state, change_property, newValue);
-        return {
-          user: action.payload,
-          content: newState.content
-        };
+        return func.changePropertyItem(userData);
       }
     // eslint-disable-next-line
     default:
       return state;
   }
-}
-
-function checkElement(value: string): boolean {
-  const regExp: RegExp = new RegExp("visible", "gm");
-  return regExp.test(value);
 }

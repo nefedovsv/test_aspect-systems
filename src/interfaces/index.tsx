@@ -5,6 +5,12 @@ export interface SendUserAction {
   payload: { value1: string; value2: string };
 }
 
+export interface IUserData {
+  path: string;
+  value: string;
+  state: IStore;
+}
+
 export enum ElementType {
   panel = "panel",
   label = "label",
