@@ -10,7 +10,7 @@ export const changeState = function(
 
   if (numbers) {
     let numberItem: number | null = Number(numbers[0]);
-    let subNumberItem: number | null = Number(numbers[1]);
+    // let subNumberItem: number | null = Number(numbers[1]);
     if (numbers.length !== 2) {
       return {
         ...store,

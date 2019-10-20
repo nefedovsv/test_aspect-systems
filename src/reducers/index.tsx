@@ -16,17 +16,13 @@ export function rootReducer(
         state: initialState
       };
 
-      if (func.parsePath(userData.path)) {
-        if (func.parseValue(userData.value)) {
-          const newElement: I.IElement | null = func.parserObject(
-            userData.value
-          );
+      if (func.parseValue(userData.value)) {
+        const objectInValue: I.IElement | null = func.parserObject(
+          userData.value
+        );
 
-          if (newElement) {
-            return insertNewElement(state, newElement);
-          }
-        } else {
-          return func.changePropertyItem(userData);
+        if (objectInValue) {
+          return insertNewElement(state, objectInValue);
         }
       } else {
         return func.changePropertyItem(userData);
