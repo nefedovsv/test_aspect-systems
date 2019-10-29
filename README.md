@@ -7,7 +7,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### `npm start`
 
 - для написания использовал React, TypeScript, Redux;
-- для работы с хранилищем данных использовал Mobx, Mobx-react;
 - для стилизации компонентов использовал Antd;
 
 ### [Демо версия приложения](https://nefedovsv.github.io/test_aspect-systems/)
